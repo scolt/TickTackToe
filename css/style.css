@@ -1,0 +1,27 @@
+.position {
+	border: 1px solid #000;
+	box-sizing: border-box;
+	float: left;
+	text-align: center;
+}
+.table {
+	border: 1px solid #000;
+	margin: 0 auto;
+}
+.tiktak{
+	margin: 50% auto 0;
+	position: relative;
+}
+.reboot{
+	border: 1px solid #ccc;
+	width: 100%;
+	text-align: center;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+.reboot:hover {
+	background: #ccc;
+}
+.position{
+	cursor: pointer;
+}

@@ -39,7 +39,7 @@ function TickTackToe(){
 			button.addEventListener('click', self.restart);
 		}
 		input.style.width=self.config.width+'px';
-		input.style.top=-self.config.width/2+'px'
+		input.style.margin=-self.config.width/2+'px'+' 0 '+' 0 '+-self.config.width/2+'px';
 	}
 	self.handler=function(){
 		if(!self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)]){

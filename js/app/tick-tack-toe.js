@@ -2,22 +2,36 @@ function TickTackToe(){
 	var self=this;
 	self.config = {
 		size: 3,
-		width: 120,
+		width: 300,
 		path: 'TickTackToe',
 		winCombination: 3,
 		reset: true
 	}
+
 	self.stats= new Array();
 	self.player='player1';
-	self.create=function(){
+	self.create=self.createClassic;
+	self.check;
+	self.items=new Array();
+	/* Draw fields and buttons */
+	self.drawField=function(){
 		var input=document.getElementsByClassName(self.config.path)[0];
 		var table=document.createElement('div');
-			table.className='table';
-			table.style.height=table.style.width=self.config.width+'px';
-		input.appendChild(table);
-		if(self.config.size>self.config.winCombination){
-			self.step=2;
+		table.className='table';
+		table.style.height=table.style.width=self.config.width+'px';
+		/* Create buttons of type*/
+		for(var i=0; i<2; i++){
+			var button=document.createElement('div');
+			button.className='reboot';
+			button.innerHTML='Type'+i;
+			input.appendChild(button);
+			switch (i){
+				case 0: button.addEventListener('click', self.createClassic); break;
+				case 1: button.addEventListener('click', self.createModern); break;
+			}
 		}
+		/* Create matrix for game*/
+		input.appendChild(table);
 		for(var i=0; i<self.config.size; i++){
 			self.stats[i]=new Array();
 			for(var j=0; j<self.config.size; j++){
@@ -31,6 +45,7 @@ function TickTackToe(){
 				block.addEventListener('click', self.handler);
 			}
 		}
+		/* Create restart button or not*/
 		if(self.config.reset){
 			var button=document.createElement('div');
 			button.className='reboot';
@@ -38,6 +53,7 @@ function TickTackToe(){
 			input.appendChild(button);
 			button.addEventListener('click', self.restart);
 		}
+		/* Set property for main block*/
 		input.style.width=self.config.width+'px';
 		input.style.margin=-self.config.width/2+'px'+' 0 '+' 0 '+-self.config.width/2+'px';
 	}
@@ -47,14 +63,14 @@ function TickTackToe(){
 				case 'player1':
 					self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)]=1;
 					this.style.backgroundColor="#ccc";
-					this.innerHTML='X';
+					this.innerHTML=self.items[0];
 					self.check(this.className.substr(10, 1),this.className.substr(12, 1));
 					self.player='player2';
 					break;
 				case 'player2':
 					self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)]=2;
 					this.style.backgroundColor="#e0e0e0";
-					this.innerHTML='O';
+					this.innerHTML=self.items[1];
 					self.check(this.className.substr(10, 1),this.className.substr(12, 1));
 					self.player='player1';
 					break;
@@ -62,14 +78,148 @@ function TickTackToe(){
 
 		}
 	}
-	self.restart=function(){
+	self.clearField=function(){
 		var tictak=document.getElementsByClassName(self.config.path)[0];
 		while (tictak.firstChild) {
 			tictak.removeChild(tictak.firstChild);
 		}
+	}
+	self.restart=function(){
+		self.clearField();
 		self.create();
 	}
-	self.check=function(i,j){
+	/*Types of game*/
+	self.createClassic=function(){
+		self.create=self.createClassic;
+		self.check=self.checkClassic;
+		self.items=['X', 'O'];
+		self.clearField();
+		self.drawField();
+	}
+	self.createModern=function(){
+		self.create=self.createModern;
+		self.check=self.checkModern;
+		self.items=['Z', 'H'];
+		self.clearField();
+		self.drawField();
+	}
+	/* Check win */
+	self.checkModern=function(i,j){
+		var r=0, p= 0, q=0;
+		var count=0;
+		var fl=true;
+		var win=new Array();
+
+			/* Check left */
+			for(var n=0; n<self.config.size-1; n++){
+				for(var m=0; m<self.config.size-1; m++){
+					count=0;
+					win=[];
+					try{
+						if(self.stats[i][j]==self.stats[n][m]){
+							p=n;
+							q=m;
+							r=p+self.config.winCombination-1;
+							while(self.stats[i][j]==self.stats[p][q] && self.stats[i][j]==self.stats[r][q]){
+								if(r==p){
+									win.push([r,q]);
+									if(count>=self.config.winCombination-1) {
+										self.win(win);
+										return true;
+									}
+								}
+								win.push([p,q]);
+								win.push([r,q]);
+								count=count+2;
+								q++;
+								p++;
+								r--;
+							}
+						}
+					}
+					catch(e){}
+					count=0;
+					win=[];
+					try{
+						if(self.stats[i][j]==self.stats[n][m]){
+							p=n;
+							q=m;
+							r=p;
+							win.push([i,j]);
+							while(self.stats[i][j]==self.stats[p][q] && self.stats[i][j]==self.stats[r][q]){
+								if(r!=p){
+									count++;
+								}
+								count++;
+								win.push([p,q]);
+								win.push([r,q]);
+								q++;
+								p++;
+								r--;
+								if(count>=self.config.winCombination) {
+									self.win(win);
+									return true;
+								}
+							}
+						}
+					}
+					catch(e){}
+					count=0;
+					win=[];
+					try{
+						if(self.stats[i][j]==self.stats[n][m]){
+							p=n;
+							q=m;
+							r=q;
+							win.push([i,j]);
+							while(self.stats[i][j]==self.stats[p][q] && self.stats[i][j]==self.stats[p][r]){
+								if(r!=p){
+									count++;
+								}
+								count++;
+								win.push([p,q]);
+								win.push([p,r]);
+								q++;
+								p++;
+								r--;
+								if(count>=self.config.winCombination) {
+									self.win(win);
+									return true;
+								}
+							}
+						}
+					}
+					catch(e){}
+					count=0;
+					win=[];
+					try{
+						if(self.stats[i][j]==self.stats[n][m]){
+							p=n;
+							q=m;
+							r=q+self.config.winCombination-1;
+							win.push([i,j]);
+							while(self.stats[i][j]==self.stats[p][q] && self.stats[i][j]==self.stats[p][r]){
+								if(r!=p){
+									count++;
+								}
+								count++;
+								win.push([p,q]);
+								win.push([p,r]);
+								q++;
+								p++;
+								r--;
+								if(count>=self.config.winCombination) {
+									self.win(win);
+									return true;
+								}
+							}
+						}
+					}
+					catch(e){}
+				}
+			}
+	}
+	self.checkClassic=function(i,j){
 		var k=+j+1;
 		var g=+j+1;
 		var count=0;
@@ -169,6 +319,7 @@ function TickTackToe(){
 			self.win(win);
 		}
 	}
+	/*Action win*/
 	self.win=function(arr){
 		for(var i=0; i<arr.length; i++){
 			var el=document.getElementsByClassName('y'+arr[i][0]+'x'+arr[i][1])[0];

@@ -1,12 +1,13 @@
 .position {
-	border: 1px solid #000;
+	border: 1px solid #fff;
 	box-sizing: border-box;
 	float: left;
 	text-align: center;
 }
 .table {
-	border: 1px solid #000;
+	border: 1px solid #fff;
 	margin: 0 auto;
+	background: url(bg.jpg);
 }
 .TickTackToe{
 	top: 50%;
@@ -25,4 +26,20 @@
 }
 .position{
 	cursor: pointer;
+}
+.changeType>div {
+	width: 50%;
+	float: left;
+	text-align: center;
+	background: #e3e3e3;
+	border: 1px solid #000;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+div.changeType {
+	overflow: hidden;
+}
+.changeType .active {
+	background: #323232;
+	color: #fff;
 }

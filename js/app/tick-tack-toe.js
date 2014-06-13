@@ -12,6 +12,11 @@ function TickTackToe(){
 	self.player='player1';
 	self.create=self.createClassic;
 	self.check;
+	self.games={
+		count: 2,
+		0: {activeMenu: true},
+		1: {activeMenu: false}
+	}
 	self.items=new Array();
 	/* Draw fields and buttons */
 	self.drawField=function(){
@@ -19,16 +24,18 @@ function TickTackToe(){
 		var table=document.createElement('div');
 		table.className='table';
 		table.style.height=table.style.width=self.config.width+'px';
+		var menu=document.createElement('div');
+		menu.className='changeType';
+		input.appendChild(menu);
 		/* Create buttons of type*/
 		for(var i=0; i<2; i++){
 			var button=document.createElement('div');
-			button.className='reboot';
-			button.innerHTML='Type'+i;
-			input.appendChild(button);
+			if(self.games[i].activeMenu) button.className='active';
 			switch (i){
-				case 0: button.addEventListener('click', self.createClassic); break;
-				case 1: button.addEventListener('click', self.createModern); break;
+				case 0: button.innerHTML='Classic Game'; button.addEventListener('click', self.createClassic); break;
+				case 1: button.innerHTML='Modern Game';button.addEventListener('click', self.createModern); break;
 			}
+			menu.appendChild(button);
 		}
 		/* Create matrix for game*/
 		input.appendChild(table);
@@ -62,7 +69,7 @@ function TickTackToe(){
 			switch (self.player){
 				case 'player1':
 					self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)]=1;
-					this.style.backgroundColor="#ccc";
+					this.style.backgroundColor="#e0e0e0";
 					this.innerHTML=self.items[0];
 					self.check(this.className.substr(10, 1),this.className.substr(12, 1));
 					self.player='player2';
@@ -90,6 +97,10 @@ function TickTackToe(){
 	}
 	/*Types of game*/
 	self.createClassic=function(){
+		for(var i=0; i<self.games.count; i++){
+			self.games[i].activeMenu=false;
+		}
+		self.games[0].activeMenu=true;
 		self.create=self.createClassic;
 		self.check=self.checkClassic;
 		self.items=['X', 'O'];
@@ -97,6 +108,10 @@ function TickTackToe(){
 		self.drawField();
 	}
 	self.createModern=function(){
+		for(var i=0; i<self.games.count; i++){
+			self.games[i].activeMenu=false;
+		}
+		self.games[1].activeMenu=true;
 		self.create=self.createModern;
 		self.check=self.checkModern;
 		self.items=['Z', 'H'];

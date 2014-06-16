@@ -8,6 +8,7 @@
 	border: 1px solid #fff;
 	margin: 0 auto;
 	background: url(bg.jpg);
+	position: relative;
 }
 .TickTackToe{
 	top: 50%;
@@ -36,10 +37,27 @@
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 }
-div.changeType {
+.changeType {
 	overflow: hidden;
 }
 .changeType .active {
 	background: #323232;
 	color: #fff;
+}
+.winWindow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(255, 255, 255, 0.72);
+	width: 100%;
+	text-transform: uppercase;
+	height: 100%;
+	text-align: center;
+	padding: 50% 0;
+	margin-top: 0px;
+	font-size: 30px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	text-shadow: 1px 1px 4px #000;
+	color: #FFF;
 }

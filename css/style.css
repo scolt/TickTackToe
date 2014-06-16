@@ -53,11 +53,15 @@
 	text-transform: uppercase;
 	height: 100%;
 	text-align: center;
-	padding: 50% 0;
+	padding: 40% 0;
 	margin-top: 0px;
 	font-size: 30px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	text-shadow: 1px 1px 4px #000;
 	color: #FFF;
+}
+.zombie{
+	background-image: url('../images/zombie/bg.png');
+	background-size: 100% auto;
 }

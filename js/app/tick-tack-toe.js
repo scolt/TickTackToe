@@ -10,10 +10,11 @@ function TickTackToe() {
 	self.stats = new Array();
 	self.player = 'player1';
 	self.games = {
-		count: 2,
+		count: 4,
 		0: {activeMenu: true},
 		1: {activeMenu: false},
-		2: {activeMenu: false}
+		2: {activeMenu: false},
+		3: {activeMenu: false}
 	};
 	self.items = ['X', 'O'];
 	self.check = function (i, j) {
@@ -129,7 +130,7 @@ function TickTackToe() {
 		input.appendChild(win);
 	}
 	self.create = function () {
-		for (var i = 0; i < self.games.count; i++) {
+		for (var i = 0; i < self.games.length; i++) {
 			self.games[i].activeMenu = false;
 		}
 		self.games[0].activeMenu = true;

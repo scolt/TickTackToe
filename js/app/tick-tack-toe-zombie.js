@@ -224,6 +224,17 @@ function TickTackToeZombie(){
 			self.win(win);
 		}
 	}
+	self.win=function(arr){
+		for(var i=0; i<arr.length; i++){
+			var el=document.getElementsByClassName('y'+arr[i][0]+'x'+arr[i][1])[0];
+			el.style.backgroundColor="#dcffd1";
+		}
+		var win=document.createElement('div');
+		win.className='winWindow zombie';
+		win.innerHTML=self.player + ' WIN!<br>ARGGRH!';
+		var input=document.getElementsByClassName('table')[0];
+		input.appendChild(win);
+	}
 	self.handler = function () {
 		if (!self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)]) {
 			switch (self.player) {

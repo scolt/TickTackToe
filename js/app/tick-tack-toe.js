@@ -12,7 +12,8 @@ function TickTackToe() {
 	self.games = {
 		count: 2,
 		0: {activeMenu: true},
-		1: {activeMenu: false}
+		1: {activeMenu: false},
+		2: {activeMenu: false}
 	};
 	self.items = ['X', 'O'];
 	self.check = function (i, j) {
@@ -142,14 +143,12 @@ function TickTackToe() {
 			switch (self.player) {
 				case 'player1':
 					self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)] = 1;
-					this.style.backgroundColor = "#e0e0e0";
 					this.innerHTML = self.items[0];
 					self.check(this.className.substr(10, 1), this.className.substr(12, 1));
 					self.player = 'player2';
 					break;
 				case 'player2':
 					self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)] = 2;
-					this.style.backgroundColor = "#e0e0e0";
 					this.innerHTML = self.items[1];
 					self.check(this.className.substr(10, 1), this.className.substr(12, 1));
 					self.player = 'player1';

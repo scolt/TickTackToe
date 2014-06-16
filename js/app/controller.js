@@ -2,7 +2,7 @@ function controller(){
 	var self=this;
 	var game;
 	self.type;
-	self.types=['classic', 'modern'];
+	self.types=['classic', 'modern', 'zombie'];
 	self.clearField = function () {
 		var tictak = document.getElementsByClassName(game.config.path)[0];
 		while (tictak.firstChild) {
@@ -18,7 +18,7 @@ function controller(){
 		menu.className = 'changeType';
 		input.appendChild(menu);
 		/* Create buttons of type*/
-		for (var i = 0; i < 2; i++) {
+		for (var i = 0; i < 3; i++) {
 			var button = document.createElement('div');
 			if (game.games[i].activeMenu) button.className = 'active';
 			switch(i){
@@ -27,6 +27,9 @@ function controller(){
 					break;
 				case 1:
 					button.innerHTML='Modern Game';
+					break;
+				case 2:
+					button.innerHTML='Zombie Game';
 					break;
 			}
 			menu.appendChild(button);
@@ -59,6 +62,9 @@ function controller(){
 				break;
 			case 'modern':
 				service=TickTackToeModern;
+				break;
+			case 'zombie':
+				service=TickTackToeZombie;
 				break;
 		}
 		game=new service;

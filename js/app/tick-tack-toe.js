@@ -158,4 +158,12 @@ function TickTackToe() {
 
 		}
 	}
+	self.fillAll = function(){
+		for(var i=0; i<self.config.size; i++){
+			for(var j=0; j<self.config.size; j++){
+				if(self.stats[i][j]==0) return false;
+			}
+		}
+		return true;
+	};
 }

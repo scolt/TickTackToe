@@ -28,17 +28,20 @@
 .position{
 	cursor: pointer;
 }
+.changeType {
+	overflow: hidden;
+	border-top: 1px solid #000;
+	border-left: 1px solid #000;
+}
 .changeType>div {
 	width: 50%;
 	float: left;
 	text-align: center;
 	background: #e3e3e3;
-	border: 1px solid #000;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
-}
-.changeType {
-	overflow: hidden;
 }
 .changeType .active {
 	background: #323232;

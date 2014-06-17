@@ -1,4 +1,4 @@
-function controller(){
+function controller(params){
 	var self=this;
 	var game;
 	self.type;
@@ -74,6 +74,7 @@ function controller(){
 				break;
 		}
 		game=new service;
+		game.config=params;
 		self.clearField();
 		self.drawField();
 		game.create();

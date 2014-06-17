@@ -24,7 +24,6 @@ function TickTackToeZombieBot(){
 				do{
 					var x=Math.round(min - 0.5 + Math.random()*(max-min+1));
 					var y=Math.round(min - 0.5 + Math.random()*(max-min+1));
-					console.log(y+' '+x);
 				}while(self.stats[y][x]!=0);
 				self.stats[y][x] = 2;
 				self.check(y, x);

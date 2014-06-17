@@ -1,7 +1,7 @@
 TickTackToeModern.prototype=new TickTackToe;
 function TickTackToeModern(){
 	var self=this;
-	self.items=['Z', 'W'];
+	self.items=['&#191;', '?'];
 	self.create=function(){
 		for(var i=0; i<self.games.count; i++){
 			self.games[i].activeMenu=false;

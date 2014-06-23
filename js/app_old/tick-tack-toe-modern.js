@@ -2,18 +2,7 @@ TickTackToeModern.prototype=new TickTackToe;
 function TickTackToeModern(){
 	var self=this;
 	self.items=['&#191;', '?'];
-	self.create=function(){
-		for(var i=0; i<self.games.count; i++){
-			self.games[i].activeMenu=false;
-		}
-		self.games[1].activeMenu=true;
-		var elems=document.getElementsByClassName('position');
-		for(var item=0; item<elems.length; item++){
-			elems[item].addEventListener('click', self.handler);
-		}
-
-	};
-	self.check=function(i,j){
+	self.check = function(i,j){
 		var r=0, p= 0, q=0;
 		var count=0;
 		var win=new Array();

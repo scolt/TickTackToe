@@ -1,36 +1,25 @@
 TickTackToeZombie.prototype=new TickTackToe;
 function TickTackToeZombie(){
 	var self=this;
-	self.create=function(){
-		for(var i=0; i<self.games.count; i++){
-			self.games[i].activeMenu=false;
-		}
-		self.games[2].activeMenu=true;
-		var elems=document.getElementsByClassName('position');
-		for(var item=0; item<elems.length; item++){
-			elems[item].addEventListener('click', self.handler);
-		}
-
-	};
 	self.check=function(i,j){
 		var r=0, p= 0, q=0;
 		var count=0;
 		var win=new Array();
 
 			/* Check left */
-			for(var n=0; n<self.config.size-1; n++){
-				for(var m=0; m<self.config.size-1; m++){
+			for(var n=0; n<this.config.size-1; n++){
+				for(var m=0; m<this.config.size-1; m++){
 					count=0;
 					win=[];
 					try{
 						if(self.stats[i][j]==self.stats[n][m]){
 							p=n;
 							q=m;
-							r=p+self.config.winCombination-1;
+							r=p+this.config.winCombination-1;
 							while(self.stats[i][j]==self.stats[p][q] && self.stats[i][j]==self.stats[r][q]){
 								if(r==p){
 									win.push([r,q]);
-									if(count>=self.config.winCombination-1) {
+									if(count>=this.config.winCombination-1) {
 										self.win(win);
 										return true;
 									}
@@ -63,7 +52,7 @@ function TickTackToeZombie(){
 								q++;
 								p++;
 								r--;
-								if(count>=self.config.winCombination) {
+								if(count>=this.config.winCombination) {
 									self.win(win);
 									return true;
 								}
@@ -89,7 +78,7 @@ function TickTackToeZombie(){
 								q++;
 								p++;
 								r--;
-								if(count>=self.config.winCombination) {
+								if(count>=this.config.winCombination) {
 									self.win(win);
 									return true;
 								}
@@ -103,7 +92,7 @@ function TickTackToeZombie(){
 						if(self.stats[i][j]==self.stats[n][m]){
 							p=n;
 							q=m;
-							r=q+self.config.winCombination-1;
+							r=q+this.config.winCombination-1;
 							win.push([i,j]);
 							while(self.stats[i][j]==self.stats[p][q] && self.stats[i][j]==self.stats[p][r]){
 								if(r!=p){
@@ -115,7 +104,7 @@ function TickTackToeZombie(){
 								q++;
 								p++;
 								r--;
-								if(count>=self.config.winCombination) {
+								if(count>=this.config.winCombination) {
 									self.win(win);
 									return true;
 								}
@@ -144,7 +133,7 @@ function TickTackToeZombie(){
 				count++;
 				k--;
 			}
-			if (count >= self.config.winCombination - 1)
+			if (count >= this.config.winCombination - 1)
 				fl = false;
 			else
 				win = [];
@@ -154,7 +143,7 @@ function TickTackToeZombie(){
 			k = +i + 1;
 			count = 0;
 			win.push([i, j]);
-			while (k <= self.config.size - 1 && self.stats[i][j] == self.stats[k][j]) {
+			while (k <= this.config.size - 1 && self.stats[i][j] == self.stats[k][j]) {
 				win.push([k, j]);
 				count++;
 				k++;
@@ -165,7 +154,7 @@ function TickTackToeZombie(){
 				count++;
 				k--;
 			}
-			if (count >= self.config.winCombination - 1)
+			if (count >= this.config.winCombination - 1)
 				fl = false;
 			else
 				win = [];
@@ -176,7 +165,7 @@ function TickTackToeZombie(){
 			g = +j + 1;
 			count = 0;
 			win.push([i, j]);
-			while (k <= self.config.size - 1 && g <= self.config.size - 1 && self.stats[i][j] == self.stats[k][g]) {
+			while (k <= this.config.size - 1 && g <= this.config.size - 1 && self.stats[i][j] == self.stats[k][g]) {
 				win.push([k, g]);
 				count++;
 				k++;
@@ -190,7 +179,7 @@ function TickTackToeZombie(){
 				k--;
 				g--;
 			}
-			if (count >= self.config.winCombination - 1)
+			if (count >= this.config.winCombination - 1)
 				fl = false;
 			else
 				win = [];
@@ -201,7 +190,7 @@ function TickTackToeZombie(){
 			g = +j - 1;
 			count = 0;
 			win.push([i, j]);
-			while (k <= self.config.size - 1 && g <= self.config.size - 1 && self.stats[i][j] == self.stats[k][g]) {
+			while (k <= this.config.size - 1 && g <= this.config.size - 1 && self.stats[i][j] == self.stats[k][g]) {
 				win.push([k, g]);
 				count++;
 				k++;
@@ -215,12 +204,12 @@ function TickTackToeZombie(){
 				k--;
 				g++;
 			}
-			if (count >= self.config.winCombination - 1)
+			if (count >= this.config.winCombination - 1)
 				fl = false;
 			else
 				win = [];
 		}
-		if (count >= self.config.winCombination - 1) {
+		if (count >= this.config.winCombination - 1) {
 			self.win(win);
 		}
 	}

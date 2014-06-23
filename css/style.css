@@ -68,3 +68,34 @@
 	background-image: url('../images/zombie/bg.png');
 	background-size: 100% auto;
 }
+label {
+	display: block;
+	float: left;
+	width: 120px;
+	text-align: right;
+	padding: 0 10px 0 0;
+}
+div.config {
+	width: 190px;
+	background: #e3e3e3;
+	border-radius: 20px;
+	padding: 20px 5px;
+	margin: -100px 0 0 -100px;
+	border: 2px solid #000;
+}
+input {
+	width: 35px;
+}
+#submitConfig {
+	width: 70px;
+	text-align: center;
+	display: block;
+	background: #CDD9FD;
+	text-decoration: none;
+	margin: 10px auto 0;
+	border: 1px solid #00f;
+	color: #000;
+}
+#submitConfig:hover{
+	background: #fff;
+}

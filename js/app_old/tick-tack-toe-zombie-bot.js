@@ -1,18 +1,6 @@
-//TickTackToeZombie.prototype=new TickTackToe;
 TickTackToeZombieBot.prototype=new TickTackToeZombie();
 function TickTackToeZombieBot(){
 	var self=this;
-	self.create=function(){
-		for(var i=0; i<self.games.count; i++){
-			self.games[i].activeMenu=false;
-		}
-		self.games[3].activeMenu=true;
-		var elems=document.getElementsByClassName('position');
-		for(var item=0; item<elems.length; item++){
-			elems[item].addEventListener('click', self.handler);
-		}
-
-	};
 	self.handler = function () {
 		if (!self.stats[this.className.substr(10, 1)][this.className.substr(12, 1)]) {
 

@@ -4,21 +4,21 @@ function ControllerClassic (config, service){
 	this.currentUser = 1;
 	var types;
 	this.clearField = function () {
-		var tictak = document.getElementsByClassName(this.config.path)[0];
-		while (tictak.firstChild) {
+		var tictak = document.getElementsByClassName('field')[0];
+		tictak.remove();
+		/*while (tictak.firstChild) {
 			tictak.removeChild(tictak.firstChild);
-		}
+		}*/
 	};
 	this.drawField = function () {
-		var input = document.getElementsByClassName(this.config.path)[0];
+		var main = document.getElementsByClassName(this.config.path)[0];
+		var input = document.createElement('div');
+		input.className = 'field';
+		main.appendChild(input);
 		var table = document.createElement('div');
 			table.className = 'table';
 			table.style.height = this.config.height + 'px';
 			table.style.width = this.config.width + 'px';
-		var menu = document.createElement('div');
-			menu.className = 'changeType';
-		input.appendChild(menu);
-
 		/* Create matrix for game*/
 		input.appendChild(table);
 		var self = this;
@@ -48,7 +48,7 @@ function ControllerClassic (config, service){
 		}
 		/* Set property for main block*/
 		input.style.height = this.config.height + 'px';
-		input.style.margin = -this.config.width / 2 + 'px' + ' 0 ' + ' 0 ' + -this.config.width / 2 + 'px';
+		main.style.margin = -this.config.width / 2 + 'px' + ' 0 ' + ' 0 ' + -this.config.width / 2 + 'px';
 	};
 	this.check = function(i,j) {
 		var k = +j + 1;

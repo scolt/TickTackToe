@@ -7,49 +7,53 @@ conf.winCombination=3;
 conf.reset=true;
 conf.path='TickTackToe';
 var mods=[{
-		Controller: ControllerClassic,
-		Model: TickTackToe,
-		name: 'Classic Mode'
+		controller: ControllerClassic,
+		service: TickTackToeService,
+		name: 'Classic Mode',
+		model: TickTacToe
 	},
 	{
-		Controller: ControllerZombie,
-		Model: TickTackToeZombie,
-		name: 'Zombie Mode'
+		controller: ControllerZombie,
+		service: TickTackToeZombieService,
+		name: 'Zombie Mode',
+		model: TickTacToeZombie
 	},
 	{
-		Controller: ControllerZombie,
-		Model: TickTackToe,
-		name: 'Zombie Classic Mode'
-	},
-	{
-		Controller: ControllerClassic,
-		Model: TickTackToeZombie,
-		name: 'Classic Zombie Mode'
+		controller: ControllerZombie,
+		service: TickTackToeService,
+		name: 'Zombie Classic Mode',
+		model: TickTacToeBrands
 	}
 ];
 
 addEventListener("DOMContentLoaded", function(){
-	var input=document.getElementsByClassName(conf.path)[0];
-	var menu = document.createElement('div');
-	menu.className = 'changeType';
-	input.appendChild(menu);
-	/* Create buttons of type*/
-	for (var i = 0; i < mods.length; i++) {
-		var button = document.createElement('div');
-		button.innerHTML = mods[i].name;
-		menu.appendChild(button);
-	}
-	var change=document.getElementsByClassName('changeType')[0];
-	change.addEventListener('click', function(e){
-		for(var i=0; i<change.childNodes.length; i++){
-			if(change.childNodes[i]==e.target) {
-				var c = new mods[i].Controller(conf, mods[i].Model);
-				c.clearField();
-				c.init();
-			}
-		}
-	});
-	var i = 1, j = 1;
-	var c = new mods[i].Controller(conf, mods[j].Model);
-	c.init();
+//	var input=document.getElementsByClassName(conf.path)[0];
+//	var menu = document.createElement('div');
+//	menu.className = 'changeType';
+//	input.appendChild(menu);
+//
+//	/* Create buttons of type*/
+//	for (var i = 0; i < mods.length; i++) {
+//		var button = document.createElement('div');
+//		if (i == j) {
+//			button.className='active';
+//		}
+//		button.innerHTML = mods[i].name;
+//		menu.appendChild(button);
+//	}
+//	var change=document.getElementsByClassName('changeType')[0];
+//	change.addEventListener('click', function(e){
+//		for(var i=0; i<change.childNodes.length; i++){
+//			change.childNodes[i].className='';
+//			if(change.childNodes[i]==e.target) {
+//				console.log(1);
+//				var controller = new mods[i].controller(new mods[i].service(new mods[i].model(), conf));
+//				change.childNodes[i].className='active';
+//			}
+//		}
+//	});
+
+	var j = 1;
+	var controller = new mods[j].controller(new mods[j].service(new mods[j].model(), conf));
+	controller.init();
 });

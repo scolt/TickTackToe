@@ -1,16 +1,14 @@
-function ControllerClassic (config, service){
-	this.config = config;
+function ControllerClassic (service){
 	this.service = service;
 	this.currentUser = 1;
 	var types;
 	this.clearField = function () {
 		var tictak = document.getElementsByClassName('field')[0];
 		tictak.remove();
-		/*while (tictak.firstChild) {
-			tictak.removeChild(tictak.firstChild);
-		}*/
 	};
 	this.drawField = function () {
+		console.dir(this.service);
+		types = this.service.getItems();
 		var main = document.getElementsByClassName(this.config.path)[0];
 		var input = document.createElement('div');
 		input.className = 'field';
@@ -50,109 +48,14 @@ function ControllerClassic (config, service){
 		input.style.height = this.config.height + 'px';
 		main.style.margin = -this.config.width / 2 + 'px' + ' 0 ' + ' 0 ' + -this.config.width / 2 + 'px';
 	};
-	this.check = function(i,j) {
-		var k = +j + 1;
-		var g = +j + 1;
-		var count = 0;
-		var fl = true;
-		var win = [];
-		/*Check horizontal*/
-		if (fl) {
-			win.push([i, j]);
-			while (this.game.getPosition(i, j)  ==  this.game.getPosition(i, k)) {
-				win.push([i, k]);
-				count++;
-				k++;
-			}
-			k = +j - 1;
-			while (this.game.getPosition(i, j)  ==  this.game.getPosition(i, k)) {
-				win.push([i, k]);
-				count++;
-				k--;
-			}
-			if (count >=  this.config.winCombination - 1)
-				fl = false;
-			else
-				win = [];
-		}
-		/* Check vertical */
-		if (fl) {
-			k = +i + 1;
-			count = 0;
-			win.push([i, j]);
-			while (k <=  this.config.sizeHeight - 1 && this.game.getPosition(i, j)  ==  this.game.getPosition(k, j)) {
-				win.push([k, j]);
-				count++;
-				k++;
-			}
-			k = +i - 1;
-			while (k >=  0 && this.game.getPosition(i, j)  ==  this.game.getPosition(k, j)) {
-				win.push([k, j]);
-				count++;
-				k--;
-			}
-			if (count >=  this.config.winCombination - 1)
-				fl = false;
-			else
-				win = [];
-		}
-		/* Check diagonal */
-		if (fl) {
-			k = +i + 1;
-			g = +j + 1;
-			count = 0;
-			win.push([i, j]);
-			while (k < this.config.sizeHeight && g <=  this.config.sizeWidth && this.game.getPosition(i, j)  ==  this.game.getPosition(k, g)) {
-				win.push([k, g]);
-				count++;
-				k++;
-				g++;
-			}
-			k = +i - 1;
-			g = +j - 1;
-			while (k >=  0 && this.game.getPosition(i, j)  ==  this.game.getPosition(k, g)) {
-				win.push([k, g]);
-				count++;
-				k--;
-				g--;
-			}
-			if (count >=  this.config.winCombination-1)
-				fl = false;
-			else
-				win = [];
-		}
-		/* Check another diagonal*/
-		if (fl) {
-			k = +i + 1;
-			g = +j - 1;
-			count = 0;
-			win.push([i, j]);
-			while (k <=  this.config.sizeHeight - 1 && g <=  this.config.sizeWidth - 1 && this.game.getPosition(i, j)  ==  this.game.getPosition(k, g)) {
-				win.push([k, g]);
-				count++;
-				k++;
-				g--;
-			}
-			k = +i - 1;
-			g = +j + 1;
-			while (k >=  0 && this.game.getPosition(i, j)  ==  this.game.getPosition(k, g)) {
-				win.push([k, g]);
-				count++;
-				k--;
-				g++;
-			}
-		}
-		if (count >=  this.config.winCombination - 1) {
-			this.win(win);
-		}
-	};
 	this.handler = function(obj) {
 		var y = obj.className.substr(10, 1);
 		var x = obj.className.substr(12, 1);
-		if(!this.game.getPosition(y,x)){
+		var check;
+		if(!this.service.getPosition(y,x)){
 			switch (this.currentUser) {
 				case 1:
-					this.game.setPosition(this.currentUser, y, x);
+					this.service.setPosition(this.currentUser, y, x);
 					switch (types.type){
 						case 'text':
 							obj.innerHTML = types.items[0];
@@ -162,11 +65,14 @@ function ControllerClassic (config, service){
 							obj.style.backgroundSize = "100% 100%";
 							break;
 					}
-					this.check(y,x);
+					check = this.service.check(y,x);
+					if(check.status) {
+						this.win(check.winArr);
+					}
 					this.currentUser = 2;
 					break;
 				case 2:
-					this.game.setPosition(this.currentUser, y, x);
+					this.service.setPosition(this.currentUser, y, x);
 					switch (types.type){
 						case 'text':
 							obj.innerHTML = types.items[1];
@@ -176,7 +82,7 @@ function ControllerClassic (config, service){
 							obj.style.backgroundSize = "100% 100%";
 							break;
 					}
-					this.check(y,x);
+					this.service.check(y,x);
 					this.currentUser = 1;
 					break;
 			}
@@ -194,90 +100,22 @@ function ControllerClassic (config, service){
 		var input = document.getElementsByClassName('table')[0];
 		input.appendChild(win);
 	};
-	this.init = function() {
-		this.drawField();
-		this.game = new this.service(this.config);
-		this.game.init();
-		types = this.game.getItems();
-	};
 	this.restart = function(){
 		this.currentUser = 1;
 		this.clearField();
-		this.init();
+		this.drawField();
+		this.service.reload();
+	};
+	this.init = function(){
+		this.config = this.service.getConfig();
+		this.drawField();
+		this.service.reload();
 	};
 }
 
-ControllerZombie.prototype = new ControllerClassic('', '');
-function ControllerZombie (config, service){
-	this.config = config;
+ControllerZombie.prototype = new ControllerClassic();
+function ControllerZombie (service){
 	this.service = service;
-	this.check = function(i,j) {
-		var r = 0, p =  0, q = 0;
-		var count = 0;
-		var win = [];
-
-		/* Check left */
-		for(var n = 0; n<this.config.sizeWidth-1; n++){
-			for(var m = 0; m<this.config.sizeHeight-1; m++){
-				count = 0;
-				win = [];
-				try{
-					if(this.game.stats[i][j] == this.game.stats[n][m]){
-						p = n;
-						q = m;
-						r = p+this.config.winCombination-1;
-						while(this.game.getPosition(i, j) == this.game.getPosition(p, q) && this.game.getPosition(i, j) == this.game.getPosition(r,q)){
-							if(r == p){
-								win.push([r,q]);
-								if(count >= this.config.winCombination-1) {
-									this.win(win);
-									return true;
-								}
-							}
-							win.push([p,q]);
-							win.push([r,q]);
-							count = count+2;
-							q++;
-							p++;
-							r--;
-						}
-					}
-				}
-				catch(e){
-					console.log(e);
-				}
-				count = 0;
-				win = [];
-				try{
-					if(this.game.getPosition(i,j) == this.game.getPosition(n, m)){
-						p = n;
-						q = m;
-						r = p;
-						win.push([i,j]);
-						while(r > 0 && this.game.getPosition(i, j) == this.game.getPosition(p, q) && this.game.getPosition(i, j) == this.game.getPosition(r, q)){
-							if(r != p){
-								count++;
-							}
-							count++;
-							win.push([p,q]);
-							win.push([r,q]);
-							q++;
-							p++;
-							r--;
-							if(count >= this.config.winCombination) {
-								this.win(win);
-								return true;
-							}
-						}
-					}
-				}
-				catch(e){
-					console.log(e);
-				}
-			}
-		}
-		return false;
-	};
 	this.win = function(arr){
 		for(var i = 0; i<arr.length; i++){
 			var el = document.getElementsByClassName('y'+arr[i][0]+'x'+arr[i][1])[0];
@@ -289,4 +127,9 @@ function ControllerZombie (config, service){
 		var input = document.getElementsByClassName('table')[0];
 		input.appendChild(win);
 	};
+	this.init = function(){
+		this.config = this.service.getConfig();
+		this.drawField();
+		this.service.reload();
+	}
 }
